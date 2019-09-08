@@ -18,7 +18,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('./renderer/index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -41,11 +41,11 @@ function createWindow () {
   //   parent: mainWindow // 指定父窗口。父窗口关闭，子窗口也跟着关闭。
   // })
   // secondWindow.loadFile('second.html')
-  ipcMain.on('message', (event, arg) => {
-    console.log(arg)
-    // event.sender.send('reply', 'hello from main')
-    mainWindow.send('reply', 'hello from main')
-  })
+  // ipcMain.on('message', (event, arg) => {
+  //   console.log(arg)
+  //   // event.sender.send('reply', 'hello from main')
+  //   mainWindow.send('reply', 'hello from main')
+  // })
 }
 
 // This method will be called when Electron has finished
