@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -32,15 +32,20 @@ function createWindow () {
   })
 
   // 创建第2个Window
-  const secondWindow = new BrowserWindow({
-    width: 400,
-    height: 300,
-    webPreferences: {
-      nodeIntegration: true
-    },
-    parent: mainWindow // 指定父窗口。父窗口关闭，子窗口也跟着关闭。
+  // const secondWindow = new BrowserWindow({
+  //   width: 400,
+  //   height: 300,
+  //   webPreferences: {
+  //     nodeIntegration: true
+  //   },
+  //   parent: mainWindow // 指定父窗口。父窗口关闭，子窗口也跟着关闭。
+  // })
+  // secondWindow.loadFile('second.html')
+  ipcMain.on('message', (event, arg) => {
+    console.log(arg)
+    // event.sender.send('reply', 'hello from main')
+    mainWindow.send('reply', 'hello from main')
   })
-  secondWindow.loadFile('second.html')
 }
 
 // This method will be called when Electron has finished
