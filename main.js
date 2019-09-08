@@ -12,7 +12,8 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true // 在应用程序中可以使用Node.js的API
     }
   })
 
@@ -29,6 +30,17 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  // 创建第2个Window
+  const secondWindow = new BrowserWindow({
+    width: 400,
+    height: 300,
+    webPreferences: {
+      nodeIntegration: true
+    },
+    parent: mainWindow // 指定父窗口。父窗口关闭，子窗口也跟着关闭。
+  })
+  secondWindow.loadFile('second.html')
 }
 
 // This method will be called when Electron has finished
