@@ -30,6 +30,17 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  ipcMain.on('add-music-window', () => {
+    const addWindow = new BrowserWindow({
+      width: 500,
+      height: 400,
+      webPreferences: {
+        nodeIntegration: true
+      },
+      parent: mainWindow
+    })
+    addWindow.loadFile('./renderer/add.html')
+  })
 
   // 创建第2个Window
   // const secondWindow = new BrowserWindow({
