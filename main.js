@@ -39,6 +39,10 @@ function createWindow() {
     },
     './renderer/index.html'
   );
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('page did finish');
+    mainWindow.send('getTracks', myStore.getTracks());
+  });
   // 点击添加歌曲按钮，创建添加歌曲的窗口
   ipcMain.on('add-music-window', () => {
     addWindow = new AppWindow(
@@ -52,6 +56,7 @@ function createWindow() {
   });
   ipcMain.on('add-tracks', (event, tracks) => {
     const updatedTracks = myStore.addTracks(tracks).getTracks();
+    mainWindow.send('getTracks', updatedTracks);
   });
   // 点击添加音乐按钮，创建文件选择对话框
   ipcMain.on('open-music-file', event => {
