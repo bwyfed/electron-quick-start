@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 
 // 自定义窗口类，封装创建窗口的功能
 class AppWindow extends BrowserWindow {
@@ -23,7 +23,7 @@ class AppWindow extends BrowserWindow {
 }
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow, addWindow;
 
 function createWindow() {
   // Create the browser window.
@@ -37,9 +37,9 @@ function createWindow() {
     },
     './renderer/index.html'
   );
-  // 点击添加歌曲按钮，创建添加歌曲对话框
+  // 点击添加歌曲按钮，创建添加歌曲的窗口
   ipcMain.on('add-music-window', () => {
-    const addWindow = new AppWindow(
+    addWindow = new AppWindow(
       {
         width: 500,
         height: 400,
@@ -47,6 +47,21 @@ function createWindow() {
       },
       './renderer/add.html'
     );
+  });
+  // 点击添加音乐按钮，创建文件选择对话框
+  ipcMain.on('open-music-file', () => {
+    dialog
+      .showOpenDialog({
+        title: '选择音乐',
+        properties: ['openFile', 'multiSelections'],
+        filters: [{ name: 'Music', extensions: ['mp3'] }]
+      })
+      .then(result => {
+        console.log(result.filePaths);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   });
 }
 
