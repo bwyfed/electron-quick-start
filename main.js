@@ -58,6 +58,10 @@ function createWindow() {
     const updatedTracks = myStore.addTracks(tracks).getTracks();
     mainWindow.send('getTracks', updatedTracks);
   });
+  ipcMain.on('delete-track', (event, id) => {
+    const updatedTracks = myStore.deleteTrack(id).getTracks();
+    mainWindow.send('getTracks', updatedTracks);
+  });
   // 点击添加音乐按钮，创建文件选择对话框
   ipcMain.on('open-music-file', event => {
     dialog
