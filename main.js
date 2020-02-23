@@ -49,7 +49,7 @@ function createWindow() {
     );
   });
   // 点击添加音乐按钮，创建文件选择对话框
-  ipcMain.on('open-music-file', () => {
+  ipcMain.on('open-music-file', event => {
     dialog
       .showOpenDialog({
         title: '选择音乐',
@@ -57,7 +57,8 @@ function createWindow() {
         filters: [{ name: 'Music', extensions: ['mp3'] }]
       })
       .then(result => {
-        console.log(result.filePaths);
+        event.sender.send('selected-files', result.filePaths);
+        // addWindow.webContents.send('selected-files', '2222222222222');
       })
       .catch(err => {
         console.log(err);
