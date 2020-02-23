@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const DataStore = require('./renderer/MusicDataStore');
 
+const myStore = new DataStore({ name: 'Music Data' });
 // 自定义窗口类，封装创建窗口的功能
 class AppWindow extends BrowserWindow {
   constructor(config, fileLocation) {
@@ -47,6 +49,9 @@ function createWindow() {
       },
       './renderer/add.html'
     );
+  });
+  ipcMain.on('add-tracks', (event, tracks) => {
+    const updatedTracks = myStore.addTracks(tracks).getTracks();
   });
   // 点击添加音乐按钮，创建文件选择对话框
   ipcMain.on('open-music-file', event => {

@@ -2,8 +2,13 @@ const { ipcRenderer } = require('electron');
 const { $ } = require('./helper');
 const path = require('path');
 
+let musicFilePaths = [];
 $('select-music').addEventListener('click', () => {
   ipcRenderer.send('open-music-file');
+});
+
+$('add-music').addEventListener('click', () => {
+  ipcRenderer.send('add-tracks', musicFilePaths);
 });
 
 const renderListHTML = paths => {
@@ -14,7 +19,7 @@ const renderListHTML = paths => {
   }, '');
   musicList.innerHTML = `<ul class="list-group">${musicItemsHTML}</ul>`;
 };
-let musicFilePaths = [];
+
 ipcRenderer.on('selected-files', (event, path) => {
   if (Array.isArray(path)) {
     musicFilePaths = path;
