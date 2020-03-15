@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon --watch main.js --exec electron ."
+    "start": "nodemon --watch main.js --exec electron .",
+    "dist": "cross-env npm_config_electron_mirror=\"https://npm.taobao.org/mirrors/electorn/\" electron-builder build --win --ia32"
   },
   "repository": "https://github.com/bwyfed/electron-quick-start",
   "keywords": [
@@ -16,10 +17,35 @@
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
+  "build": {
+    "appId": "com.cicdi.music-player",
+    "productName": "SimpleMusicPlayer",
+    "directories": {
+      "buildResources": "resource",
+      "output": "release"
+    },
+    "copyright": "Copyright @2020 cicdi",
+    "win": {
+      "icon": "resource/favicon.ico",
+      "target": [
+        "nsis",
+        "squirrel"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "language": "2052",
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "devDependencies": {
+    "cross-env": "^7.0.0",
     "electron": "^8.0.1",
+    "electron-builder": "^22.3.2",
     "nodemon": "^2.0.2"
   },
+  "homepage": "./",
   "dependencies": {
     "bootstrap": "^4.4.1",
     "electron-store": "^5.1.1",

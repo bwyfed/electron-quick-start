@@ -1,0 +1,17 @@
+directories:
+  output: release
+  buildResources: resource
+appId: com.cicdi.music-player
+productName: SimpleMusicPlayer
+copyright: Copyright @2020 cicdi
+win:
+  icon: resource/favicon.ico
+  target:
+    - nsis
+    - zip
+nsis:
+  oneClick: false
+  language: '2052'
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+electronVersion: 8.0.1
